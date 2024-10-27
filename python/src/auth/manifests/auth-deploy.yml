@@ -1,0 +1,47 @@
+apiVersion: app/v1
+kind: Deployment
+
+metadata:
+  name: auth
+  labels:
+    app: auth
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth
+    startegy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 3
+    template:
+      metadata:
+        labels:
+          app: auth
+      spec:
+        containers:
+          - name: auth
+            image: mnkordjani99/auth-service
+            port:
+              - containerPort: 5000
+            envFrom:
+              - configMapRef:
+                name: auth-configmap
+              - secretRef:
+                name: auth-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth
+
+spec:
+  selector:
+    app: auth
+  type: ClusterIP
+  ports:
+    - port: 5000
+      targetPort: 5000
+      protocol: TCP
