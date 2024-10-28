@@ -45,3 +45,4 @@ spec:
     - port: 5000
       targetPort: 5000
       protocol: TCP
+  clusterIP: 10.96.0.100
