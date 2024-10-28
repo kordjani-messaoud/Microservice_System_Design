@@ -28,6 +28,7 @@ EXPOSE 5000
 
 # Set the command that is run when the container based on this image is starts
 # Start the Python applicatiuon
-CMD ['python3', 'server.py']
+#CMD ["python", "server.py"]
+CMD python server.py
 
 
