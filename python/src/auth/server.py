@@ -4,7 +4,6 @@ import os
 from flask import Flask, request
 from flask_mysqldb import MySQL
 
-
 def create_JWT(username, secret, authz):
     return jwt.encode(
         {
@@ -18,7 +17,6 @@ def create_JWT(username, secret, authz):
         algorithm='HS256'
     )
 
-
 server = Flask(__name__)
 mysql = MySQL(server)
 
@@ -28,18 +26,15 @@ server.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD')
 server.config['MYSQL_DB'] = os.environ.get('MYSQL_DB')
 server.config['MYSQL_PORT'] = os.environ.get('MYSQL_PORT')
 
-
 @server.route('/login', methods=['POST'])
 def login():
     auth = request.authorization
     if not auth:
         return 'Unauthorized, Missing Credentials', 401
-
     cur = mysql.connection.cursor()
     res = cur.execute(
         f'SELECT name, email, password FROM user WHERE email {auth.username}'
     )
-
     if len(res) > 0:
         user_row = cur.fetchone()
         email = user_row[0]
@@ -50,7 +45,6 @@ def login():
             return create_JWT(auth.username, os.environ.get('JWT_SECRET'), True)
     else:
         return 'Invalide credentials', 401
-
 
 @server.route('/validate', methods=['POST'])
 def validate():
@@ -66,7 +60,6 @@ def validate():
     except:
         return 'Forbidden', 403
     return decoded_token, 200
-
 
 if __name__ == '__main__':
     server.run(host='0.0.0.0', port=5000)
