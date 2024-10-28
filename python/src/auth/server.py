@@ -52,7 +52,7 @@ def login():
         return 'Invalide credentials', 401
 
 
-@server.rout('/validate', methods=['POST'])
+@server.route('/validate', methods=['POST'])
 def validate():
     encoded_jwt = request.headers('Authorization')
     if not encoded_jwt:
