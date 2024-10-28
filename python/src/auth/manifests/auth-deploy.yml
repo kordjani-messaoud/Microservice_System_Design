@@ -1,4 +1,4 @@
-apiVersion: app/v1
+apiVersion: apps/v1
 kind: Deployment
 
 metadata:
@@ -11,24 +11,24 @@ spec:
   selector:
     matchLabels:
       app: auth
-    startegy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxSurge: 3
-    template:
-      metadata:
-        labels:
-          app: auth
-      spec:
-        containers:
-          - name: auth
-            image: mnkordjani99/auth-service
-            port:
-              - containerPort: 5000
-            envFrom:
-              - configMapRef:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: mnkordjani99/auth-service:v2
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
                 name: auth-configmap
-              - secretRef:
+            - secretRef:
                 name: auth-secret
 
 ---
