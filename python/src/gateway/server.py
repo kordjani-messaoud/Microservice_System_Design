@@ -15,8 +15,8 @@ mongo = PyMongo(server)
 
 fs = gridfs.GridFS(mongo.db)
 
-#connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
-#channel = connection.channel()
+connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
+channel = connection.channel()
 
 @server.route("/login", methods=["POST"])
 def login():
@@ -34,7 +34,7 @@ def upload():
         if len(request.files) > 1 or len(request.files) < 1:
             return "exectly 1 file required", 400
         for _, f in request.files.items():
-            err = util.upload(f, fs, channel, accsss)
+            err = util.upload(f, fs, channel, access)
             if err:
                 return err
         return "Success", 200
