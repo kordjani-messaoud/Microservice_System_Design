@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: gateway-configmap
+  labels:
+    app: gateway
+
+
+data:
+  AUTH_SVC_ADDRESS: 'auth:5000'
