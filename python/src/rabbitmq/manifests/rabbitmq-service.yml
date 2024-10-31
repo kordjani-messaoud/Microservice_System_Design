@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 
 metadata:
-  name: rebbitmq-service
+  name: rabbitmq-service
   labels:
     app: rabbitmq
 
@@ -14,6 +14,11 @@ spec:
 
   ports:
     - name: http
-      port: 5671
+      port: 15672
+      targetPort: 15672
+      protocol: TCP
+
+    - name: amqp
+      port: 5672
       targetPort: 5672
       protocol: TCP
