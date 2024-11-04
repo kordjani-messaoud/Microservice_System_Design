@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1.7-labs
 
 
 # Base image
@@ -21,6 +21,7 @@ COPY ./requirements.txt /app
 
 # Install python dependencies from requirements file 
 RUN pip install --no-cache-dir -r /app/requirements.txt
+
 COPY --exclude=venv/ --exclude=manifests/ . /app
 
 # Image listening at port 5000
