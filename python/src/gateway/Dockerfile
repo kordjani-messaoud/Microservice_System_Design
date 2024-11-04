@@ -9,7 +9,7 @@ EOF
 
 WORKDIR /app
 
-COPY --exclude=venv/ . /app
+COPY --exclude=venv/ --exclude=manifests/ . /app
 
 RUN pip install --no-cache-dir -r /app/requirements.txt
 

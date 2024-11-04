@@ -21,7 +21,7 @@ COPY ./requirements.txt /app
 
 # Install python dependencies from requirements file 
 RUN pip install --no-cache-dir -r /app/requirements.txt
-COPY . /app
+COPY --exclude=venv/ --exclude=manifests/ . /app
 
 # Image listening at port 5000
 EXPOSE 5000
