@@ -28,11 +28,9 @@ server.config['MYSQL_PORT'] = int(os.environ.get('MYSQL_PORT'))
 
 @server.route('/login', methods=['POST'])
 def login():
-    print('Auth login route')
     auth = request.authorization
-    print(f'Authorization heade of the request{request.authorization}')
-    if not auth:
 
+    if not auth:
         return 'Unauthorized, Missing Credentials', 401
 
     cur = mysql.connection.cursor()
@@ -43,6 +41,7 @@ def login():
         )
     except:
         return 'Error SQL request', 555
+
     else:
         user_row = cur.fetchone()
         email = user_row[0]
