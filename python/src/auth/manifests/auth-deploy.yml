@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: mnkordjani99/auth-service:v2
+          image: mnkordjani99/auth-service:latest
           ports:
             - containerPort: 5000
           envFrom:
@@ -35,7 +35,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth
+  name: auth-service
 
 spec:
   selector:
@@ -45,4 +45,3 @@ spec:
     - port: 5000
       targetPort: 5000
       protocol: TCP
-  clusterIP: 10.96.0.100
