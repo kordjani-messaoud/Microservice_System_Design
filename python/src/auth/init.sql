@@ -1,10 +1,9 @@
--- CREATE USER 'auth_user'@'localhost' IDENTIFIED BY 'auth_password';
-CREATE USER 'auth_user'@'192.168.59.100' IDENTIFIED BY 'auth_password';
+-- minikube-node.com is domain name for the minikube node whether a container of a VM
+CREATE USER 'auth_user'@'minikube-node.com' IDENTIFIED BY 'auth_password';
 
 CREATE DATABASE auth;
 
--- GRANT ALL PRIVILEGES ON auth.* TO 'auth_user'@'localhost';
-GRANT ALL PRIVILEGES ON auth.* TO 'auth_user'@'192.168.50.100';
+GRANT ALL PRIVILEGES ON auth.* TO 'auth_user'@'minikube-node.com';
 
 USE auth;
 
