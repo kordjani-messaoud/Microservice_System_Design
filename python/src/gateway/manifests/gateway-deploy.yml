@@ -7,12 +7,12 @@ metadata:
     app: gateway
 
 spec:
-  replicas: 2
+  replicas: 1
 
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 3
+      maxSurge: 2
 
   selector:
     matchLabels:
