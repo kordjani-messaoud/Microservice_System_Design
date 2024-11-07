@@ -8,23 +8,23 @@ from convert import to_mp3
 
 def main():
     # MongoDB DB's
-    client = MongoClient('host.kubernetes.internal', 27017)
+    client = MongoClient(f"{os.environ.get('MONGODB_ADDRESS')}", 27017)
     db_videos = client.videos
     db_mp3s = client.mp3s
     # GridFS
     fs_videos = gridfs.GridFS(db_videos)
-    fs_mp3s = gridfs.GridFS(db_videos)
+    fs_mp3s = gridfs.GridFS(db_mp3s)
 
     # Callback func, the parameters are pre-defined => can't add others 
     def callback(ch, method, properties, body):
         err = to_mp3.start(body, fs_videos, fs_mp3s, ch)
         if err:
             ch.basic_nack(
-                deliver_tag=method.delivery_tag
+                delivery_tag=method.delivery_tag
             )
         else:
             ch.basic_ack(
-                deliver_tag=method.delivery_tag
+                delivery_tag=method.delivery_tag
             )
 
     # RabbitMQ Connection
