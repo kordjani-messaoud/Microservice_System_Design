@@ -8,7 +8,10 @@ from convert import to_mp3
 
 def main():
     # MongoDB DB's
-    client = MongoClient(f"{os.environ.get('MONGODB_ADDRESS')}", 27017)
+    try:
+        client = MongoClient(f"{os.environ.get('MONGODB_ADDRESS')}", 27017)
+    except Exception as err:
+        return f'\nError at Connecting to MongoDB:\t{err}\n'
     db_videos = client.videos
     db_mp3s = client.mp3s
     # GridFS
@@ -17,15 +20,17 @@ def main():
 
     # Callback func, the parameters are pre-defined => can't add others 
     def callback(ch, method, properties, body):
-        err = to_mp3.start(body, fs_videos, fs_mp3s, ch)
+        mp3_fid, err = to_mp3.start(body, fs_videos, fs_mp3s, ch)
         if err:
             ch.basic_nack(
                 delivery_tag=method.delivery_tag
             )
+            print(f'\nInternal error: {err}')
         else:
             ch.basic_ack(
                 delivery_tag=method.delivery_tag
             )
+            print(f'\nMP3 Audio File id: {mp3_fid}')
 
     # RabbitMQ Connection
     connection = pika.BlockingConnection(

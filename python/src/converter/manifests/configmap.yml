@@ -8,5 +8,5 @@ metadata:
 
 data:
   MONGODB_ADDRESS: '192.168.59.1'
-  VIDEO_QUEUE: "video"
-  MP3_QUEUE: "mp3"
+  VIDEO_QUEUE: video
+  MP3_QUEUE: mp3
