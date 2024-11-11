@@ -6,7 +6,6 @@ metadata:
   labels:
     app: gateway
 
-
 data:
   AUTH_SVC_ADDRESS: 'auth-service:5000'
   MONGODB_ADDRESS: '192.168.59.1'

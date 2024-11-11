@@ -7,4 +7,4 @@ metadata:
     app: rabbitmq
 
 data:
-  KEY: value
+  PLACE_HOLDER: None
