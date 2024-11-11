@@ -15,20 +15,18 @@ mongo_videos = PyMongo(
     server, 
     uri=f"mongodb://{os.environ.get('MONGODB_ADDRESS')}:27017/videos"
     )
-
 mongo_mp3s = PyMongo(
     server, 
     uri=f"mongodb://{os.environ.get('MONGODB_ADDRESS')}:27017/mp3s"
     )
-
 fs_videos = gridfs.GridFS(mongo_videos.db)
 fs_mp3s = gridfs.GridFS(mongo_mp3s.db)
 
 connection = pika.BlockingConnection(
     pika.ConnectionParameters("rabbitmq-service")
     )
-
 channel = connection.channel()
+
 
 @server.route("/login", methods=["POST"])
 def login():
@@ -38,26 +36,26 @@ def login():
     else:
         return err
 
+
 @server.route("/upload", methods=["POST"])
 def upload():
     access, err = validate.token(request)
     if err:
         return err
-
     access = json.loads(access)
     if access["admin"]:
 
         if len(request.files) > 1 or len(request.files) < 1:
-            return "exectly 1 file required", 400
-
+            return '\nExectly 1 File Required\n', 400
         for _, f in request.files.items():
             err = util.upload(f, fs_videos, channel, access)
             if err:
                 return err
-        return "Success", 200
+        return 'Success', 200
 
     else:
         return "Forbiden, Unauthorized Access", 403
+
 
 @server.route("/download", methods=["GET"])
 def download():

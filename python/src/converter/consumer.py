@@ -1,5 +1,4 @@
 import os
-import time
 import pika 
 import sys
 import gridfs
@@ -7,18 +6,16 @@ from pymongo import MongoClient
 from convert import to_mp3
 
 def main():
-    # MongoDB DB's
     try:
         client = MongoClient(f"{os.environ.get('MONGODB_ADDRESS')}", 27017)
     except Exception as err:
         return f'\nError at Connecting to MongoDB:\t{err}\n'
+
     db_videos = client.videos
     db_mp3s = client.mp3s
-    # GridFS
     fs_videos = gridfs.GridFS(db_videos)
     fs_mp3s = gridfs.GridFS(db_mp3s)
 
-    # Callback func, the parameters are pre-defined => can't add others 
     def callback(ch, method, properties, body):
         mp3_fid, err = to_mp3.start(body, fs_videos, fs_mp3s, ch)
         if err:
@@ -32,7 +29,6 @@ def main():
             )
             print(f'\nMP3 Audio File id: {mp3_fid}')
 
-    # RabbitMQ Connection
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq-service')
     )

@@ -4,7 +4,6 @@ import sys
 from send import email
 
 def main():
-    # Callback func, the parameters are pre-defined => can't add others 
     def callback(ch, method, properties, body):
         err = email.notification(body)
         if err:
@@ -18,7 +17,6 @@ def main():
                 delivery_tag=method.delivery_tag
             )
 
-    # RabbitMQ Connection
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq-service')
     )
@@ -27,7 +25,6 @@ def main():
         queue=os.environ.get('MP3_QUEUE'),
         on_message_callback=callback
         )
-
     print("Waiting for messages. To exit press CTRL+C")
     channel.start_consuming()
 

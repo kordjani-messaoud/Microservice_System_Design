@@ -1,18 +1,17 @@
 import os
 import requests
 
-
 def login(request):
-    print('Gateway access.Login() method')
     auth = request.authorization
     if not auth:
-        return None, ("Unauthorized, Missing Credentials", 401)
+        return None, ('Unauthorized, Missing Credentials', 401)
+    else:
+        basic_auth = (auth.username, auth.password)
 
-    basicAuth = (auth.username, auth.password)
     try:
         response = requests.post(
             url=f"http://{os.environ.get('AUTH_SVC_ADDRESS')}/login",
-            auth=basicAuth
+            auth=basic_auth
         )
     except Exception as err:
         return None, (f'\nInternal Server Error: {err}\n', 500)

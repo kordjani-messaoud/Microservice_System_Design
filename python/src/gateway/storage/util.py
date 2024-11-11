@@ -1,4 +1,3 @@
-from math import exp
 import pika
 import pika.spec
 import json
@@ -8,6 +7,7 @@ def upload(f, fs, channel, access):
         fid = fs.put(f)
     except Exception as err:
         return f'\nInternal Server Error:\t{err}\n', 500
+
     message = {
         'video_fid': str(fid),
         'mp3_fid': None,
