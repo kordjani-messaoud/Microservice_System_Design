@@ -31,5 +31,5 @@ MongoDB
 
 ## Acknowledgment
 
-This project was completed following a tutorial by (Kantan Coding)[https://www.youtube.com/channel/UC5UgemAz061hkjTFHOfxNpg] on (freeCodeCamp.org)[https://www.youtube.com/channel/UC8butISFwT-Wl7EV0hUK0BQ] YouTube channel. Many thanks to him and freeCodeCamp.org team for providing accessible and high-quality educational content.
+This project was completed following a tutorial by [Kantan Coding](https://www.youtube.com/channel/UC5UgemAz061hkjTFHOfxNpg) on [freeCodeCamp.org](https://www.youtube.com/channel/UC8butISFwT-Wl7EV0hUK0BQ) YouTube channel. Many thanks to him and freeCodeCamp.org team for providing accessible and high-quality educational content.
 
